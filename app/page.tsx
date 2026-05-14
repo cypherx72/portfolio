@@ -49,7 +49,7 @@ const socials = [
   },
   {
     icon: <FaInstagram className="size-6" />,
-    href: "mailto:your@email.com",
+    href: "https://instagram.com/your-profile",
     label: "Instagram",
   },
 ];
@@ -85,6 +85,7 @@ export default function ModeToggle() {
   const leftAsideRef = useRef<HTMLElement>(null);
   const rightAsideRef = useRef<HTMLElement>(null);
   const shouldReduceMotion = useReducedMotion();
+  const [showMobileNav, setShowMobileNav] = useState(false);
 
   // Mouse spotlight
   const rawX = useMotionValue(-999);
@@ -93,6 +94,29 @@ export default function ModeToggle() {
   const spotX = useSpring(rawX, springConfig);
   const spotY = useSpring(rawY, springConfig);
   const bgMotion = useMotionValue("none");
+
+  // Show mobile nav only after scrolling past intro
+  useEffect(() => {
+    if (!isMobile) return;
+
+    const handleMobileNavVisibility = () => {
+      const profileSection = document.getElementById("profile");
+      if (!profileSection) return;
+
+      const triggerPoint = profileSection.offsetTop;
+
+      setShowMobileNav(window.scrollY > triggerPoint);
+    };
+
+    handleMobileNavVisibility();
+
+    window.addEventListener("scroll", handleMobileNavVisibility, {
+      passive: true,
+    });
+
+    return () =>
+      window.removeEventListener("scroll", handleMobileNavVisibility);
+  }, [isMobile]);
 
   useEffect(() => {
     const move = (e: MouseEvent) => {
@@ -145,7 +169,7 @@ export default function ModeToggle() {
         const el = document.getElementById(id);
         if (!el) continue;
         const rect = el.getBoundingClientRect();
-        if (rect.top - containerTop <= containerHeight * 0.5) {
+        if (rect.top - containerTop <= containerHeight * 0.15) {
           currentSection = id;
         }
       }
@@ -201,7 +225,7 @@ export default function ModeToggle() {
           ref={(node) => {
             if (!node) return;
             const update = () => {
-              node.style.background = `radial-gradient(700px circle at ${spotX.get()}px ${spotY.get()}px, rgba(var(--primary-rgb, 16 185 129) / 0.07), transparent 70%)`;
+              node.style.background = `radial-gradient(700px circle at ${spotX.get()}px ${spotY.get()}px, rgba(var(--primary-rgb, 21 93 256) / 0.07), transparent 70%)`;
             };
             const unsubX = spotX.on("change", update);
             const unsubY = spotY.on("change", update);
@@ -212,6 +236,7 @@ export default function ModeToggle() {
           }}
         />
       )}
+
       {/* ── Left Aside ───────────────────────────────────────────────────── */}
       <aside
         ref={leftAsideRef}
@@ -243,12 +268,11 @@ export default function ModeToggle() {
                   Software Developer
                 </motion.span>
               </div>
-
               {/* Lottie — hidden on mobile/tablet */}
               <article className="hidden relative xl:flex justify-center items-center w-60 aspect-square shrink-0">
                 <div className="absolute w-full h-full">
                   <DotLottieReact
-                    src="https://lottie.host/d038c526-8ca0-4b05-addf-f050935b426e/00q5C7UVl4.lottie"
+                    src="https://lottie.host/f82e25fc-c99a-4c35-9935-3d98e29da621/YRAkAjJFo6.lottie"
                     loop
                     speed={0.8}
                     autoplay
@@ -290,19 +314,19 @@ export default function ModeToggle() {
                     href={link.href}
                     onClick={(e) => handleNavClick(e, link.href)}
                     className={`
-                      group flex items-center gap-3 py-2
+                      group flex items-center gap-3 py-2 font-semibold
                       text-[11px] tracking-[0.06em] uppercase
                       no-underline transition-colors duration-200
                       ${isActive ? "text-primary" : "text-neutral-300"}
-                      hover:text-primary
+                      hover:text-blue-300
                     `}
                   >
                     <span
                       className={`
                         inline-block h-[0.5px] shrink-0
                         transition-all duration-300 ease-in-out
-                        ${isActive ? "w-8 bg-primary" : "w-4 bg-neutral-300"}
-                        group-hover:${!isActive ? "w-6" : "w-8"} group-hover:bg-primary
+                        ${isActive ? "w-8 bg-blue-300" : "w-4 bg-neutral-300"}
+                       ${!isActive ? "group-hover:w-6" : "w-8"} group-hover:bg-primary
                       `}
                     />
                     {link.label}
@@ -341,28 +365,39 @@ export default function ModeToggle() {
       </aside>
 
       {/* ── Mobile sticky section label (lg: hidden) ────────────────────── */}
-      <div className="lg:hidden top-0 z-50 sticky flex items-center bg-background/80 backdrop-blur-md px-8 py-3 border-white/10 border-b h-11 overflow-hidden">
-        <AnimatePresence mode="wait">
-          <motion.span
-            key={activeSection}
-            initial={{ opacity: 0, y: 10 }}
+      <AnimatePresence>
+        {showMobileNav && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.18, ease: "easeOut" }}
-            className="font-medium text-[11px] text-primary uppercase tracking-[0.1em]"
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.2 }}
+            className="lg:hidden top-0 z-50 sticky flex items-center bg-background/80 backdrop-blur-md px-8 py-3 border-white/10 border-b h-11 overflow-hidden"
           >
-            {
-              navLinks.find((l) => l.href.replace("#", "") === activeSection)
-                ?.label
-            }
-          </motion.span>
-        </AnimatePresence>
-      </div>
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={activeSection}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.18, ease: "easeOut" }}
+                className="font-medium text-[11px] text-primary uppercase tracking-widest"
+              >
+                {
+                  navLinks.find(
+                    (l) => l.href.replace("#", "") === activeSection,
+                  )?.label
+                }
+              </motion.span>
+            </AnimatePresence>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ── Right Aside — scrollable ─────────────────────────────────────── */}
       <aside
         ref={rightAsideRef}
-        className="space-y-8 px-8 lg:px-0 py-10 lg:pr-10 w-full lg:w-3/5 lg:h-screen lg:overflow-y-auto"
+        className="space-y-8 px-8 lg:px-0 py-10 lg:pr-10 w-full lg:w-3/5 lg:h-screen overflow-x-hidden lg:overflow-y-auto"
       >
         {/* Profile */}
         <section id="profile" className="h-auto">
@@ -377,22 +412,24 @@ export default function ModeToggle() {
               Who&apos;s behind the code
             </motion.h3>
             <motion.div
-              className="bg-primary rounded-full w-12 h-0.5"
+              className="bg-primary/40 rounded-full w-12 h-0.5"
               initial={{ scaleX: 0 }}
               whileInView={{ scaleX: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: 0.1 }}
             />
-            <div className="flex lg:flex-row flex-col items-center gap-8 lg:gap-0 pt-10">
+            {/* FIX: stack vertically on mobile, row on lg; w-full + overflow-hidden */}
+            <div className="flex lg:flex-row flex-col items-center gap-8 pt-10 w-full overflow-hidden">
+              {/* Skills column — always vertical, centered on mobile */}
               <motion.article
-                className="flex flex-col justify-center items-center gap-2 w-full lg:w-auto lg:min-w-1/3"
+                className="flex flex-col justify-center items-start gap-3 w-full lg:w-auto lg:min-w-[33%] shrink-0"
                 variants={fadeUp}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.2 }}
                 custom={0}
               >
-                <Item className="border-primary border-t-0 border-r-0 border-b-0 border-l-3 rounded-none rounded-l-xs">
+                <Item className="flex-nowrap border-primary/40 border-t-0 border-r-0 border-b-0 border-l-3 rounded-none rounded-l-xs">
                   <ItemMedia variant="image">
                     <Image
                       src="/svg/web-development.svg"
@@ -407,10 +444,11 @@ export default function ModeToggle() {
                 </Item>
 
                 <Separator
-                  className="bg-primary rounded-full min-w-1 min-h-1"
+                  className="hidden sm:block bg-primary/40 rounded-full min-w-1 min-h-1"
                   orientation="vertical"
                 />
-                <Item className="border-primary border-t-0 border-r-0 border-b-0 border-l-3 rounded-none rounded-l-xs">
+
+                <Item className="flex-nowrap border-primary/40 border-t-0 border-r-0 border-b-0 border-l-3 rounded-none rounded-l-xs">
                   <ItemMedia variant="image">
                     <Image
                       src="/svg/machine-learning.svg"
@@ -423,12 +461,13 @@ export default function ModeToggle() {
                     <ItemDescription />
                   </ItemContent>
                 </Item>
+
                 <Separator
-                  className="bg-primary rounded-full min-w-1 min-h-1"
+                  className="hidden sm:block bg-primary/40 rounded-full min-w-1 min-h-1"
                   orientation="vertical"
                 />
 
-                <Item className="flex items-center border-primary border-t-0 border-r-0 border-b-0 border-l-3 rounded-none rounded-l-xs">
+                <Item className="flex flex-nowrap items-center border-primary/40 border-t-0 border-r-0 border-b-0 border-l-3 rounded-none rounded-l-xs">
                   <ItemMedia variant="image">
                     <Image
                       src="/svg/mobile-development.svg"
@@ -444,7 +483,7 @@ export default function ModeToggle() {
               </motion.article>
 
               <motion.p
-                className="text-neutral-300 tracking-wide"
+                className="w-full text-neutral-300 tracking-wide"
                 variants={fadeUp}
                 initial="hidden"
                 whileInView="visible"
@@ -478,7 +517,7 @@ export default function ModeToggle() {
               Projects
             </motion.h3>
             <motion.div
-              className="bg-primary rounded-full w-12 h-0.5"
+              className="bg-primary/40 rounded-full w-12 h-0.5"
               initial={{ scaleX: 0 }}
               whileInView={{ scaleX: 1 }}
               viewport={{ once: true }}
@@ -501,7 +540,7 @@ export default function ModeToggle() {
               Activity &amp; Progress
             </motion.h3>
             <motion.div
-              className="bg-primary rounded-full w-12 h-0.5"
+              className="bg-primary/40 rounded-full w-12 h-0.5"
               initial={{ scaleX: 0 }}
               whileInView={{ scaleX: 1 }}
               viewport={{ once: true }}

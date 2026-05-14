@@ -79,10 +79,10 @@ export default function Projects() {
         <motion.div
           key={p.name}
           variants={cardVariants}
-          className="gap-5 grid grid-cols-[140px_1fr] hover:bg-white/5 hover:shadow-sm hover:backdrop-blur-md p-4 border-transparent hover:border-white/15 border-t rounded-xl transition-all duration-300"
+          className="flex flex-col gap-5 sm:grid sm:grid-cols-[140px_1fr] hover:bg-white/5 hover:shadow-sm hover:backdrop-blur-md p-4 border-transparent hover:border-white/15 border-t rounded-xl transition-all duration-300"
         >
           {/* Thumbnail */}
-          <div className="w-35 h-22 rounded-lg border border-white/15 bg-(--surface) overflow-hidden shrink-0">
+          <div className="w-full sm:w-35 h-44 sm:h-22 rounded-lg border border-white/15 bg-(--surface) overflow-hidden shrink-0">
             {p.thumb && (
               <Image
                 src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -95,14 +95,14 @@ export default function Projects() {
           </div>
 
           {/* Content */}
-          <div className="hover:text-emerald-500">
+          <div className="min-w-0">
             <Link
               href={p.href}
               target="_blank"
               rel="noopener noreferrer"
               className="group inline-flex items-center gap-1.5 mb-2"
             >
-              <span className="text-[15px] hover:text-emerald-500 font-semibold text-(--ink)">
+              <span className="text-[15px] hover:text-primary font-semibold text-(--ink)">
                 {p.name}
               </span>
               <RiArrowRightUpLine size={13} className="text-(--ink)" />
@@ -134,7 +134,7 @@ export default function Projects() {
                 {p.stack.map((s) => (
                   <span
                     key={s}
-                    className="bg-white/10 px-2.5 py-0.5 rounded-full font-medium text-[12px] text-emerald-400"
+                    className="bg-white/10 px-2.5 py-0.5 rounded-full font-medium text-[12px] text-primary"
                   >
                     {s}
                   </span>

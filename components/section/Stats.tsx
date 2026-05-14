@@ -29,13 +29,12 @@ const fallbackLC: LeetCodeStats = {
   ranking: 0,
 };
 
-// Dynamic color — must stay inline (value depends on runtime count)
 function getColor(count: number) {
-  if (count === 0) return "oklch(95% 0.052 163.051)";
-  if (count < 3) return "oklch(76.5% 0.177 163.223)";
-  if (count < 6) return "oklch(50.8% 0.118 165.612)";
-  if (count < 10) return "oklch(26.2% 0.051 172.552)";
-  return "var(--accent)";
+  if (count === 0) return "oklch(97% 0.014 254.604)";
+  if (count < 3) return "oklch(80.9% 0.105 251.813)";
+  if (count < 6) return "oklch(70.7% 0.165 254.624)";
+  if (count < 10) return "oklch(62.3% 0.214 259.815)";
+  return "oklch(37.9% 0.146 265.522)";
 }
 
 function Heatmap({ weeks }: { weeks: { days: number[] }[] }) {
@@ -45,9 +44,7 @@ function Heatmap({ weeks }: { weeks: { days: number[] }[] }) {
   const data = weeks.length ? weeks : placeholder;
 
   return (
-    // Outer: full width, scrollable horizontally — stays within the card
-    <div className="relative pb-1 w-full overflow-x-auto">
-      {/* Inner: min-w-max keeps columns in a single row; no overflow here */}
+    <div className="relative pb-3 w-full overflow-x-auto">
       <div
         className={`flex gap-0.75 min-w-max transition-opacity ${
           weeks.length ? "opacity-100" : "opacity-30"
@@ -66,12 +63,6 @@ function Heatmap({ weeks }: { weeks: { days: number[] }[] }) {
           </div>
         ))}
       </div>
-
-      {!weeks.length && (
-        <div className="absolute inset-0 flex justify-center items-center gap-1.5 font-mono text-[10px] text-muted">
-          <AlertCircle size={11} /> Add your GitHub username to load real data
-        </div>
-      )}
     </div>
   );
 }
@@ -79,7 +70,7 @@ function Heatmap({ weeks }: { weeks: { days: number[] }[] }) {
 const colorMap: Record<string, string> = {
   amber: "text-amber-500",
   red: "text-red-500",
-  green: "text-emerald-500",
+  green: "text-primary",
 };
 
 function DiffBar({
@@ -95,9 +86,8 @@ function DiffBar({
 }) {
   return (
     <div className="mb-3">
-      <div className="flex justify-between mb-1.25 font-mono text-[11px] text-neutral-300">
+      <div className="flex justify-between mb-1.25 font-mono text-[12px] text-neutral-300">
         <span className={colorMap[color]}>{label}</span>
-        {/* dynamic label color — stays inline */}
         <span>
           {solved}
           <span className="mx-0.75 text-neutral-400">/</span>
@@ -156,10 +146,9 @@ export default function Stats() {
       <div className="flex flex-col space-y-4">
         {/* ── GitHub Card ─────────────────────────────────── */}
         <div className="p-6 border rounded-lg overflow-hidden">
-          {/* Header */}
-          <div className="flex items-center gap-2 mb-5 text-emerald-500">
+          <div className="flex items-center gap-2 mb-5 text-primary">
             <FaGithub />
-            <span className="font-mono font-medium text-xs">GitHub</span>
+            <span className="font-mono font-medium">GitHub</span>
             {ghError && (
               <span className="flex items-center gap-1 ml-auto font-mono text-[10px] text-neutral-300">
                 <AlertCircle size={10} /> unavailable
@@ -167,7 +156,6 @@ export default function Stats() {
             )}
           </div>
 
-          {/* Commit count */}
           <div className="mb-5">
             <div className="font-mono font-bold text-neutral-300 text-3xl">
               {ghLoading ? "—" : github.totalCommits.toLocaleString()}
@@ -182,18 +170,16 @@ export default function Stats() {
 
         {/* ── LeetCode Card ───────────────────────────────── */}
         <div className="p-6 border rounded-lg">
-          {/* Header */}
-          <div className="flex items-center gap-2 mb-5 text-emerald-500">
+          <div className="flex items-center gap-2 mb-5 text-primary">
             <SiLeetcode />
-            <span className="font-mono font-medium text-xs">LeetCode</span>
+            <span className="font-mono font-medium">LeetCode</span>
             {lcError && (
-              <span className="flex items-center gap-1 ml-auto font-mono text-[10px] text-amber-500">
+              <span className="flex items-center gap-1 ml-auto font-mono text-[10px] text-neutral-500">
                 <AlertCircle size={10} /> unavailable
               </span>
             )}
           </div>
 
-          {/* Problems count */}
           <div className="mb-5">
             <div className="font-mono font-bold text-neutral-300 text-3xl">
               {lcLoading ? "—" : leetcode.totalSolved}
@@ -223,9 +209,9 @@ export default function Stats() {
           />
 
           {leetcode.ranking > 0 && (
-            <div className="mt-4 font-mono text-[11px] text-neutral-300">
+            <div className="mt-4 font-mono text-[12px] text-neutral-300">
               Global Ranking:{" "}
-              <span className="text-amber-400">
+              <span className="text-blue-400">
                 #{leetcode.ranking.toLocaleString()}
               </span>
             </div>
