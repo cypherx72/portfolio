@@ -34,11 +34,7 @@ function getColor(count: number) {
   if (count < 3) return "oklch(80.9% 0.105 251.813)";
   if (count < 6) return "oklch(70.7% 0.165 254.624)";
   if (count < 10) return "oklch(62.3% 0.214 259.815)";
-<<<<<<< HEAD
   return "oklch(37.9% 0.146 265.522)"; 
-=======
-  return "oklch(37.9% 0.146 265.522)";
->>>>>>> c846e6551314a30ace85dc98af1d9d9f3e3d4f37
 }
 
 function Heatmap({ weeks }: { weeks: { days: number[] }[] }) {
@@ -112,16 +108,11 @@ export default function Stats() {
 
   useEffect(() => {
     fetch(
-<<<<<<< HEAD
       `https://github-contributions-api.jogruber.de/v4/${GITHUB_USERNAME}?y=2026`,
     )
     
 
     
-=======
-      `https://github-contributions-api.jogruber.de/v4/${GITHUB_USERNAME}?y=last`,
-    )
->>>>>>> c846e6551314a30ace85dc98af1d9d9f3e3d4f37
       .then((r) => r.json())
       .then((data) => {
         const contributions = data.contributions as { count: number }[];
