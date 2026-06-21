@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Tavonga Chitambira — Full-Stack Engineer",
     description: "Full-stack engineer building real-time distributed systems.",
-    url: "https://your-portfolio-url.com",
+    url: "https://tavongachitambira.vercel.app/",
     type: "website",
   },
   twitter: {
