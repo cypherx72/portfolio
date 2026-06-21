@@ -16,8 +16,20 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Tavonga Chitambira",
-  description: "Tavonga Chitambira Portfolio",
+  title: "Tavonga Chitambira — Full-Stack Engineer",
+  description: "Full-stack engineer building real-time distributed systems. Currently architecting SyncBoard, a horizontally-scaled multiplayer incident management platform.",
+  keywords: ["full-stack engineer", "Next.js", "TypeScript", "distributed systems", "Socket.io"],
+  openGraph: {
+    title: "Tavonga Chitambira — Full-Stack Engineer",
+    description: "Full-stack engineer building real-time distributed systems.",
+    url: "https://your-portfolio-url.com",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Tavonga Chitambira — Full-Stack Engineer",
+    description: "Full-stack engineer building real-time distributed systems.",
+  },
 };
 
 export default function RootLayout({
