@@ -24,7 +24,7 @@ const navLinks = [
 const socials = [
   {
     icon: <FaGithub className="size-6" />,
-    href: "https://github.com/cypherx72",
+    href: "https://github.com/tavongachitambira",
     label: "GitHub",
   },
   {
