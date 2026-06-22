@@ -2,7 +2,7 @@
 
 Personal portfolio site built with Next.js, Tailwind CSS, and Framer Motion.
 
-Live: [tavonga.dev](https://tavonga.dev) · GitHub: [@cypherx72](https://github.com/cypherx72)
+Live: [tavonga.dev](https://tavongachitambira.vercel.app) · GitHub: [@cypherx72](https://github.com/tavongachitambira)
 
 ## About the project
 
@@ -30,7 +30,7 @@ A single-page portfolio with a split-panel layout: a sticky left aside for navig
 ## Getting started
 
 ```bash
-git clone https://github.com/cypherx72/portfolio.git
+git clone https://github.com/tavongachitambira/portfolio.git
 cd portfolio
 npm install
 npm run dev
