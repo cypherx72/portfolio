@@ -63,4 +63,4 @@ This portfolio is open for inspiration and reuse under **CC BY 4.0**. See [`LICE
 
 ## License
 
-[Creative Commons Attribution 4.0 International](./LICENSE) © 2025 Tavonga Chitambira
+[Creative Commons Attribution 4.0 International](./LICENSE) © 2026 Tavonga Chitambira
