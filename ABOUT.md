@@ -41,7 +41,7 @@ This portfolio showcases my work and skills. It's built with:
 - Smooth animations and interactions
 - Open-source under CC BY 4.0
 
-**Live Site:** [tavonga.dev](https://tavongachitambira.vercel.app)
+**Live Site:** [tavonga.dev](https://portfolio-gilt-one-39.vercel.app)
 
 ### Project Structure
 ```
@@ -56,6 +56,9 @@ public/           # Static assets and downloadable resources
 ### SyncBoard
 A collaborative project management tool designed for teams to stay synchronized and organized.
 
+### NPFRS
+[Project details coming soon]
+
 ## 🎓 Focus Areas
 
 - **Web Performance:** Optimizing load times and runtime performance
@@ -65,7 +68,7 @@ A collaborative project management tool designed for teams to stay synchronized 
 
 ## 🔗 Connect & Learn More
 
-- **Portfolio Site:** [tavonga.dev](https://tavongachitambira.vercel.app)
+- **Portfolio Site:** [tavonga.dev](https://portfolio-gilt-one-39.vercel.app)
 - **GitHub:** [@tavongachitambira](https://github.com/tavongachitambira)
 - **Repository:** This portfolio is open for inspiration and reuse under [CC BY 4.0](./LICENSE)
 
