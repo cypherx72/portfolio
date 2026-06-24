@@ -39,7 +39,7 @@ const socials = [
   },
   {
     icon: <FaInstagram className="size-6" />,
-    href: "#",
+    href: "https://www.instagram.com/obi_chitas03/",
     label: "Instagram",
   },
 ];
